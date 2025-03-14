@@ -141,7 +141,7 @@ const handleTouchEnd = (event) => {
                             key={index}
                             src={option}
                             alt={`Option ${index}`}
-                            draggable
+                   
                             onDragStart={(event) => handleDragStart(event, index)} // Desktop
                             onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
                             onTouchMove={handleTouchMove} // Mobile

@@ -150,9 +150,6 @@
     cursor: pointer;
 }
 
-.options-container img:active {
-    transform: scale(1.1); /* Optional: Add a slight scale effect when dragging */
-}
 
   .options-container img:hover {
     scale: 1.05;
