@@ -73,10 +73,15 @@ const handleTouchEnd = (event) => {
     // Handle drop (for desktop)
     const handleDrop = (event) => {
         event.preventDefault();
-        if (selectedOption !== null) {
-            checkAnswer(selectedOption);
-            setSelectedOption(null); // Reset selected option after drop
+        const draggedIndex = event.dataTransfer.getData("answerIndex");
+        const correctIndex = MakeAMatchs[currentQuestion].answer_id;
+
+        if (parseInt(draggedIndex) === correctIndex) {
+            setIsCorrect(true);
+        } else {
+            setIsCorrect(false);
         }
+        setSelectedAnswer(draggedIndex);
     };
 
 

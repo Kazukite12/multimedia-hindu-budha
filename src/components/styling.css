@@ -152,7 +152,7 @@
 
 /* Style for the dragged element */
 .dragged-element {
-    width: 100px; /* Set a fixed width */
+    width: 200px !important; /* Set a fixed width */
     height: auto; /* Maintain aspect ratio */
     pointer-events: none; /* Prevent interference with other elements */
 }
