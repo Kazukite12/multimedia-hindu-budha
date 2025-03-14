@@ -136,25 +136,26 @@ const handleTouchEnd = (event) => {
                 </div>
     
                 <div className="options-container">
-                    {MakeAMatchs[currentQuestion].answers.map((option, index) => (
-                        <img
-                            key={index}
-                            src={option}
-                            alt={`Option ${index}`}
-                   
-                            onDragStart={(event) => handleDragStart(event, index)} // Desktop
-                            onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
-                            onTouchMove={handleTouchMove} // Mobile
-                            onTouchEnd={handleTouchEnd} // Mobile
-                            style={{
-                                position: isDragging && draggedIndex === index ? 'fixed' : 'static',
-                                left: isDragging && draggedIndex === index ? touchPosition.x - 50 : 'auto', // Adjust offset
-                                top: isDragging && draggedIndex === index ? touchPosition.y - 50 : 'auto', // Adjust offset
-                                pointerEvents: isDragging && draggedIndex === index ? 'none' : 'auto', // Prevent interference
-                            }}
-                        />
-                    ))}
-                </div>
+    {MakeAMatchs[currentQuestion].answers.map((option, index) => (
+        <img
+            key={index}
+            src={option}
+            alt={`Option ${index}`}
+            draggable
+            onDragStart={(event) => handleDragStart(event, index)} // Desktop
+            onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
+            onTouchMove={handleTouchMove} // Mobile
+            onTouchEnd={handleTouchEnd} // Mobile
+            style={{
+                position: isDragging && draggedIndex === index ? 'fixed' : 'static',
+                left: isDragging && draggedIndex === index ? touchPosition.x - 50 : 'auto', // Adjust offset
+                top: isDragging && draggedIndex === index ? touchPosition.y - 50 : 'auto', // Adjust offset
+                pointerEvents: isDragging && draggedIndex === index ? 'none' : 'auto', // Prevent interference
+            }}
+            className={isDragging && draggedIndex === index ? 'dragged-element' : ''} // Apply class when dragging
+        />
+    ))}
+</div>
             </div>
         </div>
     );
