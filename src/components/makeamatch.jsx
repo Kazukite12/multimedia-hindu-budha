@@ -14,22 +14,43 @@ const MakeAMatch =()=> {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isCorrect, setIsCorrect] = useState(null);
+    const [draggedIndex, setDraggedIndex] = useState(null);
 
+    // Handle drag (for desktop)
     const handleDragStart = (event, index) => {
         event.dataTransfer.setData("answerIndex", index);
+        setDraggedIndex(index);
     };
 
+    // Handle drop (for desktop)
     const handleDrop = (event) => {
         event.preventDefault();
-        const draggedIndex = event.dataTransfer.getData("answerIndex");
-        const correctIndex = MakeAMatchs[currentQuestion].answer_id;
+        const droppedIndex = event.dataTransfer.getData("answerIndex");
+        checkAnswer(parseInt(droppedIndex));
+    };
 
-        if (parseInt(draggedIndex) === correctIndex) {
+    // Handle touch start (for mobile)
+    const handleTouchStart = (event, index) => {
+        setDraggedIndex(index);
+    };
+
+    // Handle touch end (for mobile)
+    const handleTouchEnd = (event) => {
+        if (draggedIndex !== null) {
+            checkAnswer(draggedIndex);
+            setDraggedIndex(null);
+        }
+    };
+
+    // Check if the answer is correct
+    const checkAnswer = (index) => {
+        const correctIndex = MakeAMatchs[currentQuestion].answer_id;
+        if (index === correctIndex) {
             setIsCorrect(true);
         } else {
             setIsCorrect(false);
         }
-        setSelectedAnswer(draggedIndex);
+        setSelectedAnswer(index);
     };
 
     const navigate =useNavigate()
@@ -67,7 +88,7 @@ const MakeAMatch =()=> {
         className="drop-zone-container"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleDrop}
-            
+                onTouchEnd={handleTouchEnd} // Handle touch drop
             >
                 {selectedAnswer !== null ? (
                     <img
@@ -96,7 +117,8 @@ const MakeAMatch =()=> {
                         src={option}
                         alt={`Option ${index}`}
                         draggable
-                        onDragStart={(event) => handleDragStart(event, index)}
+                        onDragStart={(event) => handleDragStart(event, index)} // Desktop
+                        onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
                 
                     />
                 ))}
