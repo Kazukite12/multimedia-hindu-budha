@@ -68,7 +68,7 @@ const MakeAMatchs = [
         nomor:dua,
         question:soal2,
         answers: [malang,mojokerto,kediri],
-        answer_id:1
+        answer_id:0
     },
     {
         id:3,
@@ -84,7 +84,7 @@ const MakeAMatchs = [
         question:soal4,
 
         answers: [tohjoyo, kenArok,kartaNegara],
-        answer_id:1
+        answer_id:2
     },
     {
         id:5,
@@ -92,7 +92,7 @@ const MakeAMatchs = [
         question:soal5,
 
         answers: [perangParegeg,perangMedang,perangBubat],
-        answer_id:1
+        answer_id:0
     },
     {
         id:6,
@@ -100,7 +100,7 @@ const MakeAMatchs = [
         question:soal6,
 
         answers: [gajahMada,hayamWuruk,radenWijaya],
-        answer_id:1
+        answer_id:2
     },
     {
         id:7,
@@ -108,7 +108,7 @@ const MakeAMatchs = [
         question:soal7,
 
         answers: [rajaJayabaya,gajahMada,hayamWuruk],
-        answer_id:1
+        answer_id:2
     },
     {
         id:8,
@@ -116,7 +116,7 @@ const MakeAMatchs = [
         question:soal8,
 
         answers: [candiPenataran,candimendut,candiBorobudur],
-        answer_id:1
+        answer_id:0
     },
     {
         id:9,
@@ -124,7 +124,7 @@ const MakeAMatchs = [
         question:soal9,
 
         answers: [perangSaudara,melepaskanDiri,semuaBenar],
-        answer_id:1
+        answer_id:9
     },
     {
         id:10,
@@ -132,7 +132,7 @@ const MakeAMatchs = [
         question:soal10,
 
         answers: [sumpahPalapa,sumpahTanMuji,sumpahTanPanisu],
-        answer_id:1
+        answer_id:0
     },
 ]
 

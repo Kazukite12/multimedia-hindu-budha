@@ -107,7 +107,41 @@
     width: 100%;
     height: 100%;
     display: flex;
+    position: relative;
   }
+
+  .point {
+    position: absolute;
+    background: rgb(0, 0, 0,0.9);
+    opacity: 0.8;
+
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    left: 50%;
+    padding: 0px 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  @keyframes countUp {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.point p {
+    display: inline-block;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease-out;
+}
+
+.animate-count {
+    animation: countUp 0.5s ease-out;
+}
 
   .answer-container {
     display: flex;
@@ -166,6 +200,7 @@
     width: 40%;
     height: 80%;
     align-self: flex-end;
+    position: relative;
   }
   .drop-zone {
     width: 100%;
@@ -215,6 +250,95 @@
     zoom: 0.6;
     border: none;
 }
+
+
+
+
+
+
+@keyframes popup-bg {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes popup-icon {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes popout-icon {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes popout-bg {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.alert-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert-background {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  font-size: 50px;
+}
+
+.result {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.score-container {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  gap: 15px;
+  background: rgb(999, 999, 999, 0.5);
+  font-size: 1.5em;
+}
+
+.score-container div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.result img {
+  width: 15% !important;
+}
+
+/* Step-by-step animation classes */
+.popup-bg { animation: popup-bg 0.2s ease-out forwards; }
+.popup-icon { animation: popup-icon 0.2s ease-out forwards; }
+.popout-icon { animation: popout-icon 0.3s ease-in 1.5s forwards; }
+.popout-bg { animation: popout-bg 0.3s ease-in 1.5s forwards; }
+
 
   @media screen and (max-height: 500px) and (min-aspect-ratio: 7/4) {
     .drop-zone-container {

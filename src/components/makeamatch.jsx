@@ -5,14 +5,30 @@ import petunjuk from "../assets/petunjuk.png"
 import mulai from "../assets/mulaimakeamatch.png"
 import greenlayout from "../assets/green-layout.png"
 import MakeAMatchs from "../data/makeamatch"
+import { FaStar } from "react-icons/fa6";
+import { useEffect } from "react"
 
 import next from "../assets/next button.png"
 import "./styling.css"
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import AnswerAlert from "./answerAlert"
 const MakeAMatch =()=> {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [points, setPoints] = useState(0);
+    const [animate, setAnimate] = useState(false);
+
+
+    const [done,setDone] = useState(false)
+
+    useEffect(() => {
+        if (points > 0) {
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 500); // Remove animation after 0.5s
+        }
+    }, [points]); // Runs whenever points change
+
     const [isCorrect, setIsCorrect] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
 
@@ -41,6 +57,11 @@ const handleTouchMove = (event) => {
 
 // Handle touch end
 const handleTouchEnd = (event) => {
+    if (selectedAnswer != null) {
+        setIsDragging(false);
+        setDraggedElement(null);
+        return
+    }
     if (isDragging) {
         setIsDragging(false);
         setDraggedElement(null);
@@ -73,11 +94,18 @@ const handleTouchEnd = (event) => {
     // Handle drop (for desktop)
     const handleDrop = (event) => {
         event.preventDefault();
+
+        if (selectedAnswer != null) {
+            setIsDragging(false);
+            setDraggedElement(null);
+            return
+        }
         const draggedIndex = event.dataTransfer.getData("answerIndex");
         const correctIndex = MakeAMatchs[currentQuestion].answer_id;
 
         if (parseInt(draggedIndex) === correctIndex) {
             setIsCorrect(true);
+            setPoints(points+10)
         } else {
             setIsCorrect(false);
         }
@@ -90,6 +118,7 @@ const handleTouchEnd = (event) => {
         const correctIndex = MakeAMatchs[currentQuestion].answer_id;
         if (index === correctIndex) {
             setIsCorrect(true);
+            setPoints(points+10)
         } else {
             setIsCorrect(false);
         }
@@ -104,12 +133,21 @@ const handleTouchEnd = (event) => {
             setSelectedAnswer(null);
             setIsCorrect(null);
         } else {
-            navigate('/evaluasi')
+            setDone(true)
         }
     };
     return (
         <div className="menu-container main-container">
+            {!done &&
+            
             <div className="makeamatch">
+
+            <div className="point">
+            <FaStar color="yellow" />
+            <p className={animate ? "animate-count" : ""}>{points}</p>
+    
+        </div>
+
                 <div className="answer-container">
                     <div className="question-wrapper">
                         <img className="nomor" src={MakeAMatchs[currentQuestion].nomor} alt="Question Number"/>
@@ -123,6 +161,10 @@ const handleTouchEnd = (event) => {
                             onDrop={handleDrop}
                             onTouchEnd={handleTouchEnd}
                         >
+                            {selectedAnswer != null &&
+                            
+                            <AnswerAlert isCorrect={isCorrect}/>
+                            }
                             {selectedAnswer !== null ? (
                                 <img
                                     className="drop-answer"
@@ -136,7 +178,10 @@ const handleTouchEnd = (event) => {
                     </div>
     
                     <div className="match-button-wrapper">
+                        {selectedAnswer != null &&
+                        
                         <img onClick={handleNext} src={next} alt="next"/>
+                        }
                     </div>
                 </div>
     
@@ -162,6 +207,23 @@ const handleTouchEnd = (event) => {
     ))}
 </div>
             </div>
+            }
+            {done &&
+            
+            <div className="result">
+                <div className="score-container">
+                    <h1>Skor :</h1>
+                    <div>
+                        <h2>{points}</h2>
+                    </div>
+                </div>
+              
+                     
+                        <img onClick={()=>navigate('/evaluasi')} src={next} alt="next"/>
+                     
+            
+            </div>
+            }
         </div>
     );
 }
