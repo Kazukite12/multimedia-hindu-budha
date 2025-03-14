@@ -10,7 +10,7 @@ const Evaluasi =()=> {
        <iframe 
        className="quizziz"
  
-            src="https://quizizz.com/embed/quiz/67d4534473373ac7184f8fd3" title=" - Quizizz"  allowFullScreen></iframe>
+            src="https://quizizz.com/join?gc=64061624"  title="Evaluasi - Quizizz"  allowFullScreen></iframe>
             </div>
         </div>
     )
