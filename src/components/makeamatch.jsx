@@ -16,7 +16,50 @@ const MakeAMatch =()=> {
     const [isCorrect, setIsCorrect] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
 
+    const [isDragging, setIsDragging] = useState(false);
+const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
+const [draggedElement, setDraggedElement] = useState(null);
+
     const [selectedOption, setSelectedOption] = useState(null);
+
+    // Handle touch start
+const handleTouchStart = (event, index) => {
+    const touch = event.touches[0];
+    setDraggedIndex(index);
+    setIsDragging(true);
+    setDraggedElement(event.currentTarget); // Store the dragged element
+    setTouchPosition({ x: touch.clientX, y: touch.clientY });
+};
+
+// Handle touch move
+const handleTouchMove = (event) => {
+    if (isDragging) {
+        const touch = event.touches[0];
+        setTouchPosition({ x: touch.clientX, y: touch.clientY });
+    }
+};
+
+// Handle touch end
+const handleTouchEnd = (event) => {
+    if (isDragging) {
+        setIsDragging(false);
+        setDraggedElement(null);
+
+        // Check if the touch ended over the drop zone
+        const dropZone = document.querySelector('.drop-zone-container');
+        const dropZoneRect = dropZone.getBoundingClientRect();
+        const touch = event.changedTouches[0];
+
+        if (
+            touch.clientX >= dropZoneRect.left &&
+            touch.clientX <= dropZoneRect.right &&
+            touch.clientY >= dropZoneRect.top &&
+            touch.clientY <= dropZoneRect.bottom
+        ) {
+            checkAnswer(draggedIndex);
+        }
+    }
+};
 
     const handleOptionSelect = (index) => {
         setSelectedOption(index);
@@ -36,18 +79,6 @@ const MakeAMatch =()=> {
         }
     };
 
-    // Handle touch start (for mobile)
-    const handleTouchStart = (event, index) => {
-        setDraggedIndex(index);
-    };
-
-    // Handle touch end (for mobile)
-    const handleTouchEnd = (event) => {
-        if (draggedIndex !== null) {
-            checkAnswer(draggedIndex);
-            setDraggedIndex(null);
-        }
-    };
 
     // Check if the answer is correct
     const checkAnswer = (index) => {
@@ -85,7 +116,7 @@ const MakeAMatch =()=> {
                             className="drop-zone-container"
                             onDragOver={(e) => e.preventDefault()}
                             onDrop={handleDrop}
-                            onClick={handleDrop} // Handle tap on mobile
+                            onTouchEnd={handleTouchEnd}
                         >
                             {selectedAnswer !== null ? (
                                 <img
@@ -112,7 +143,15 @@ const MakeAMatch =()=> {
                             alt={`Option ${index}`}
                             draggable
                             onDragStart={(event) => handleDragStart(event, index)} // Desktop
-                            onClick={() => handleOptionSelect(index)} // Mobile
+                            onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
+                            onTouchMove={handleTouchMove} // Mobile
+                            onTouchEnd={handleTouchEnd} // Mobile
+                            style={{
+                                position: isDragging && draggedIndex === index ? 'fixed' : 'static',
+                                left: isDragging && draggedIndex === index ? touchPosition.x - 50 : 'auto', // Adjust offset
+                                top: isDragging && draggedIndex === index ? touchPosition.y - 50 : 'auto', // Adjust offset
+                                pointerEvents: isDragging && draggedIndex === index ? 'none' : 'auto', // Prevent interference
+                            }}
                         />
                     ))}
                 </div>
