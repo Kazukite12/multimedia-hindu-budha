@@ -16,6 +16,11 @@ const MakeAMatch =()=> {
     const [isCorrect, setIsCorrect] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
 
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const handleOptionSelect = (index) => {
+        setSelectedOption(index);
+    };
     // Handle drag (for desktop)
     const handleDragStart = (event, index) => {
         event.dataTransfer.setData("answerIndex", index);
@@ -25,8 +30,10 @@ const MakeAMatch =()=> {
     // Handle drop (for desktop)
     const handleDrop = (event) => {
         event.preventDefault();
-        const droppedIndex = event.dataTransfer.getData("answerIndex");
-        checkAnswer(parseInt(droppedIndex));
+        if (selectedOption !== null) {
+            checkAnswer(selectedOption);
+            setSelectedOption(null); // Reset selected option after drop
+        }
     };
 
     // Handle touch start (for mobile)
@@ -66,67 +73,52 @@ const MakeAMatch =()=> {
     };
     return (
         <div className="menu-container main-container">
-{/*        
-            <img className="materi-title" src={makeamatch}/>
-            <img  className="materi" src={petunjuk}/>
-            <div className="button-wrapper">
-
-             <img className="next-button" src={mulai}/> 
-        </div> */}
-
-        <div className="makeamatch">
-
-        <div className="answer-container">
-        <div className="question-wrapper">
-            <img className="nomor" src={MakeAMatchs[currentQuestion].nomor}/>
-            <img className="question" src={MakeAMatchs[currentQuestion].question}/>
-        </div>
-
-        <div className="drop-wrapper">
-
-        <div
-        className="drop-zone-container"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDrop}
-                onTouchEnd={handleTouchEnd} // Handle touch drop
-            >
-                {selectedAnswer !== null ? (
-                    <img
-                 className="drop-answer"
-                        src={MakeAMatchs[currentQuestion].answers[selectedAnswer]}
-                        alt="Selected Answer"
-                
-                    />
-                ) : (
-                    <div className="drop-zone"></div>
-                )}
-        </div>
-        </div>
-
-        <div className="match-button-wrapper">
-            <img onClick={handleNext} src={next} alt="next"/>
-        </div>
-
-
-        </div>
-           
-        <div className="options-container">
-                {MakeAMatchs[currentQuestion].answers.map((option, index) => (
-                    <img
-                        key={index}
-                        src={option}
-                        alt={`Option ${index}`}
-                        draggable
-                        onDragStart={(event) => handleDragStart(event, index)} // Desktop
-                        onTouchStart={(event) => handleTouchStart(event, index)} // Mobile
-                
-                    />
-                ))}
+            <div className="makeamatch">
+                <div className="answer-container">
+                    <div className="question-wrapper">
+                        <img className="nomor" src={MakeAMatchs[currentQuestion].nomor} alt="Question Number"/>
+                        <img className="question" src={MakeAMatchs[currentQuestion].question} alt="Question"/>
+                    </div>
+    
+                    <div className="drop-wrapper">
+                        <div
+                            className="drop-zone-container"
+                            onDragOver={(e) => e.preventDefault()}
+                            onDrop={handleDrop}
+                            onClick={handleDrop} // Handle tap on mobile
+                        >
+                            {selectedAnswer !== null ? (
+                                <img
+                                    className="drop-answer"
+                                    src={MakeAMatchs[currentQuestion].answers[selectedAnswer]}
+                                    alt="Selected Answer"
+                                />
+                            ) : (
+                                <div className="drop-zone"></div>
+                            )}
+                        </div>
+                    </div>
+    
+                    <div className="match-button-wrapper">
+                        <img onClick={handleNext} src={next} alt="next"/>
+                    </div>
+                </div>
+    
+                <div className="options-container">
+                    {MakeAMatchs[currentQuestion].answers.map((option, index) => (
+                        <img
+                            key={index}
+                            src={option}
+                            alt={`Option ${index}`}
+                            draggable
+                            onDragStart={(event) => handleDragStart(event, index)} // Desktop
+                            onClick={() => handleOptionSelect(index)} // Mobile
+                        />
+                    ))}
+                </div>
             </div>
         </div>
-        
-        </div>
-    )
+    );
 }
 
 export default MakeAMatch
