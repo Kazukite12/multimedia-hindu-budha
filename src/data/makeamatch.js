@@ -108,7 +108,7 @@ const MakeAMatchs = [
         question:soal7,
 
         answers: [rajaJayabaya,gajahMada,hayamWuruk],
-        answer_id:2
+        answer_id:1
     },
     {
         id:8,
@@ -124,7 +124,7 @@ const MakeAMatchs = [
         question:soal9,
 
         answers: [perangSaudara,melepaskanDiri,semuaBenar],
-        answer_id:9
+        answer_id:2
     },
     {
         id:10,
