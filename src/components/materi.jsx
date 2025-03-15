@@ -22,8 +22,14 @@ const Materi =()=> {
         setCurrentMateri(currentMateri+1)
     }
 const navigate = useNavigate()
+
+
     const previousMateri =()=> {
         if (currentMateri == 0) {
+            navigate('/menu')
+        }
+
+        if (currentMateri == materi.length-1) {
             navigate('/menu')
         }
 
