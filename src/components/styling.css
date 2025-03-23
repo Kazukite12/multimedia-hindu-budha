@@ -333,6 +333,13 @@
   width: 15% !important;
 }
 
+.petunjuk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 /* Step-by-step animation classes */
 .popup-bg { animation: popup-bg 0.2s ease-out forwards; }
 .popup-icon { animation: popup-icon 0.2s ease-out forwards; }

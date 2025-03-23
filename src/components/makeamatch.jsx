@@ -8,6 +8,7 @@ import MakeAMatchs from "../data/makeamatch"
 import { FaStar } from "react-icons/fa6";
 import { useEffect } from "react"
 
+
 import next from "../assets/next button.png"
 import "./styling.css"
 import { useState } from "react"
@@ -18,6 +19,8 @@ const MakeAMatch =()=> {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [points, setPoints] = useState(0);
     const [animate, setAnimate] = useState(false);
+
+    const [isStarted, setIsStarted] = useState(false)
 
 
     const [done,setDone] = useState(false)
@@ -138,7 +141,15 @@ const handleTouchEnd = (event) => {
     };
     return (
         <div className="menu-container main-container">
-            {!done &&
+            { !isStarted &&
+                <div className="petunjuk">
+                    <img style={{width:'25%'}} src={makeamatch}/>
+                    <img style={{width:'70%'}} src={petunjuk}/>
+                    <img role="button" onClick={()=>setIsStarted(true)}  style={{width:'15%',cursor:'pointer'}} src={mulai}/>
+                </div>
+            }
+
+            {!done && isStarted &&
             
             <div className="makeamatch">
 

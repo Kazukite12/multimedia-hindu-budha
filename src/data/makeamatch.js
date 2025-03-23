@@ -22,6 +22,8 @@ import sumpahTanMuji from "../assets/makeamatch/sumpah tan muji.png"
 import sumpahTanPanisu from "../assets/makeamatch/sumpah tan panisu.png"
 import tohjoyo from "../assets/makeamatch/tohjoyo.png"
 import rajaJayabaya from "../assets/makeamatch/rajaJayabaya.png"
+import candiTikus from "../assets/makeamatch/candi tikus.png"
+import candiJawi from "../assets/makeamatch/candi jawi.png"
 
 import satu from "../assets/makeamatch/1.png"
 import soal1 from "../assets/makeamatch/soal 1.png"
@@ -75,7 +77,7 @@ const MakeAMatchs = [
         nomor:tiga,
         question:soal3,
 
-        answers: [candiBorobudur,candiJago,candiPrambanan],
+        answers: [candiPenataran,candiJago,candiTikus],
         answer_id:1
     },
     {
@@ -115,7 +117,7 @@ const MakeAMatchs = [
         nomor:delapan,
         question:soal8,
 
-        answers: [candiPenataran,candimendut,candiBorobudur],
+        answers: [candiPenataran,candiJawi,candiJago],
         answer_id:0
     },
     {
